@@ -8,7 +8,7 @@ Python 3.11 + Playwright browser automation + Pollinations/Groq AI for form fill
 
 ```bash
 cd ai-agent
-python3.11 -m venv venv
+python -m venv venv
 source venv/bin/activate        # Linux/macOS
 # venv\Scripts\activate         # Windows
 
