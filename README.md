@@ -5,11 +5,11 @@
 <img src="https://img.shields.io/badge/built%20with-typescript-blue?style=for-the-badge" />
 <img src="https://img.shields.io/badge/automation-playwright-orange?style=for-the-badge" />
 
-# 🤖 AutoApply
+# 🤖 RushApply
 
 ### The job hunt is broken. We fixed it.
 
-**AutoApply** scrapes hundreds of remote job boards every 5 hours, uses AI to match you to the best roles, and automatically fills out application forms — while you sleep.
+**RushApply** scrapes hundreds of remote job boards every 5 hours, uses AI to match you to the best roles, and automatically fills out application forms — while you sleep.
 
 [Live Demo](#) · [Report Bug](issues) · [Request Feature](issues)
 
@@ -25,9 +25,9 @@ You spend 4 hours a day copy-pasting your name, email, and work history into ide
 
 ---
 
-## ✨ What AutoApply Does
+## ✨ What RushApply Does
 
-AutoApply is a full-stack platform that turns your job search into a background process.
+RushApply is a full-stack platform that turns your job search into a background process.
 
 **It scrapes.** Every 5 hours, the engine pulls fresh listings from 40+ job boards — WeWorkRemotely, Remotive, Himalayas, Jobicy, Greenhouse ATS boards (Shopify, Notion, Figma, HashiCorp), Ashby boards (Linear, Vercel, Supabase), Lever boards (Zapier, Webflow, Buffer), and more. Only jobs posted in the last 24 hours make it in. No stale listings.
 
@@ -93,8 +93,8 @@ No credit card required. The entire stack runs on free tiers.
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/yourusername/autoapply
-cd autoapply
+git clone https://github.com/yourusername/rushapply
+cd rushapply
 npm install
 cp backend/.env.example backend/.env
 cp ai-agent/.env.example ai-agent/.env

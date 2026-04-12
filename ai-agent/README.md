@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🤖 AutoApply — AI Agent
+# 🤖 RushApply — AI Agent
 
 **Autonomous job application bot powered by Playwright browser automation and LLM-driven form filling.**
 
@@ -16,7 +16,7 @@
 
 ## What This Does
 
-The AI agent is the execution layer of AutoApply. It takes job listings from the backend, opens each application URL in a real Chromium browser, intelligently detects form fields, and fills them out using LLM-generated answers tailored to the specific role.
+The AI agent is the execution layer of RushApply. It takes job listings from the backend, opens each application URL in a real Chromium browser, intelligently detects form fields, and fills them out using LLM-generated answers tailored to the specific role.
 
 **It handles:**
 - Name, email, phone, and address fields
@@ -168,7 +168,7 @@ crontab -e
   --user-id YOUR_USER_ID \
   --email you@example.com \
   --password yourpassword \
-  --jobs-limit 20 >> /var/log/autoapply.log 2>&1
+  --jobs-limit 20 >> /var/log/rushapply.log 2>&1
 ```
 
 ### Systemd Service (always-on server)

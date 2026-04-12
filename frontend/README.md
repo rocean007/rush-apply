@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🖥️ AutoApply — Frontend
+# 🖥️ RushApply — Frontend
 
 **React dashboard for browsing scraped jobs, tracking applications, and managing your AI-powered job search.**
 

@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚙️ AutoApply — Backend API
+# ⚙️ RushApply — Backend API
 
 **The data and orchestration layer. Scrapes 40+ job boards, stores everything, serves the frontend, and coordinates the AI agent.**
 
@@ -15,7 +15,7 @@
 
 ## What This Does
 
-The backend is the brain of AutoApply. It runs three jobs simultaneously:
+The backend is the brain of RushApply. It runs three jobs simultaneously:
 
 **Scraper** — Pulls fresh job listings from 40+ sources every 5 hours. RSS feeds, JSON APIs, and ATS boards (Greenhouse, Ashby, Lever, Workable). Every job gets tagged with category, seniority, salary range, tech stack, and a structured `applyPayload` blob ready for the AI agent to consume.
 
