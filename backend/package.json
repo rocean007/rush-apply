@@ -8,6 +8,7 @@
     "db:migrate": "ts-node src/db/migrate.ts"
   },
   "dependencies": {
+    "@types/jsdom": "^28.0.1",
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^9.4.3",
     "cookie-parser": "^1.4.6",
@@ -16,6 +17,7 @@
     "express-rate-limit": "^7.2.0",
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
+    "jsdom": "^29.0.2",
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
