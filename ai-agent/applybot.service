@@ -1,0 +1,22 @@
+[Unit]
+Description=Applybot AI Job Application Agent
+After=network.target
+
+[Service]
+Type=simple
+User=applybot
+WorkingDirectory=/opt/applybot/ai-agent
+EnvironmentFile=/opt/applybot/ai-agent/.env
+ExecStart=/usr/bin/python3 apply_agent.py \
+    --user-id ${USER_ID} \
+    --email ${USER_EMAIL} \
+    --password ${USER_PASSWORD} \
+    --jobs-limit 10 \
+    --headless
+Restart=on-failure
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
