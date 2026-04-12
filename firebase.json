@@ -1,13 +1,6 @@
 {
-
   "hosting": {
-
     "site": "job-apply",
-
-    "public": "public",
-
-    ...
-
+    "public": "public"
   }
-
 }
