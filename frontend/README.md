@@ -1,6 +1,32 @@
-# Frontend — Auto Job Agent
+<div align="center">
 
-React 18 + TypeScript + Vite + TailwindCSS with glassmorphism design.
+# 🖥️ AutoApply — Frontend
+
+**React dashboard for browsing scraped jobs, tracking applications, and managing your AI-powered job search.**
+
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Zustand](https://img.shields.io/badge/Zustand-state-brown?style=flat-square)](https://zustand-demo.pmnd.rs)
+
+</div>
+
+---
+
+## What This Does
+
+The frontend is the control center for your automated job search. It gives you visibility into everything the scraper has found, lets you manage what the agent applies to, and shows you the status of every application in real time.
+
+**Job browser** — Search and filter hundreds of fresh listings updated every 5 hours. Filter by role category, seniority, salary range, remote status, tech stack, and source. Every card shows the AI-inferred category and seniority so you can scan quickly.
+
+**Application tracker** — A dashboard that shows every job the agent has touched: filled, pending, applied, or failed. Nothing gets lost silently.
+
+**Resume builder** — Paste a job description, get an AI-tailored resume back in seconds. The AI reads the JD and rewrites your experience to match what the company is looking for.
+
+**Auth** — Full registration and login with persistent sessions. Your profile, skills, and resume text are stored and sent to the agent automatically.
+
+---
 
 ## Setup
 
@@ -8,72 +34,112 @@ React 18 + TypeScript + Vite + TailwindCSS with glassmorphism design.
 cd frontend
 cp .env.example .env
 npm install
-npm run dev        # Start dev server on :3000
-npm run build      # Production build → dist/
+npm run dev        # http://localhost:3000
 ```
+
+For production:
+
+```bash
+npm run build      # outputs to dist/
+```
+
+---
 
 ## Environment Variables
 
 | Variable | Description |
-|----------|-------------|
-| `VITE_API_URL` | Backend API base URL (empty = same origin) |
-| `VITE_APP_NAME` | App display name |
+|---|---|
+| `VITE_API_URL` | Backend base URL. Leave empty if frontend and backend share the same origin. Set to your Railway/Render URL in production. |
+| `VITE_APP_NAME` | Display name shown in the navbar and page title. |
 
-## Component Architecture
+---
+
+## Architecture
+
+State is managed across three Zustand stores, all with persistence middleware so sessions survive page refreshes.
+
+**`useAuthStore`** handles the user session — login, register, logout, profile fetch. Components read `user` and `isAuthenticated` from here.
+
+**`useJobStore`** owns all job data — the current listing page, search query, active filters, pagination, and the apply action. The job browser components are purely derived views of this store.
+
+**`useAppStore`** handles cross-cutting concerns — dark/light theme preference, cookie consent state, and the application history list.
+
+---
+
+## Key Features
+
+**Glassmorphism UI** — Cards use backdrop blur and translucent fills. The design works in both light and dark mode without separate style sheets.
+
+**Dark / light mode** — Reads system preference on first load. User toggle persists to localStorage. No flash of wrong theme on reload.
+
+**Skeleton loaders** — Every async surface has a shimmer placeholder. Nothing shows a blank white box while data loads.
+
+**Code splitting** — All three pages (`Landing`, `Dashboard`, `ResumeBuilder`) are lazy-loaded. The initial bundle is small.
+
+**Framer Motion** — Job cards animate in with a staggered list effect. The auth modal slides in from the right. Transitions are under 200ms so they feel instant.
+
+**Zod validation** — Auth forms validate client-side before any network request. Error messages are inline, not toasts.
+
+**IndexedDB cache** — Job listings are cached offline via `idb`. If the backend is unreachable, the last known listings still render.
+
+**Web Worker** — Resume text parsing runs off the main thread so pasting a large PDF extract doesn't freeze the UI.
+
+**Error boundary** — A top-level `ErrorBoundary` catches render errors and shows a recovery UI instead of a blank screen.
+
+**GDPR banner** — Functional cookies only. Consent choice is stored in localStorage and the banner never re-appears after a decision.
+
+---
+
+## Component Structure
 
 ```
 src/
 ├── components/
-│   ├── layout/
-│   │   ├── Layout.tsx        # Root layout with Outlet
-│   │   └── Navbar.tsx        # Sticky nav with auth toggle
-│   ├── features/
-│   │   ├── AuthModal.tsx     # Slide-in auth panel (Zod validation)
-│   │   └── JobCard.tsx       # Job listing with apply action
-│   └── ui/
-│       ├── Skeletons.tsx     # Shimmer skeleton loaders
-│       ├── CookieBanner.tsx  # GDPR consent
-│       ├── ErrorBoundary.tsx # React error boundary
-│       └── FullPageLoader.tsx
+│   ├── layout/         Navbar, root Layout with Outlet
+│   ├── features/       AuthModal, JobCard — the meaty UI pieces
+│   └── ui/             Skeletons, ErrorBoundary, CookieBanner, FullPageLoader
 ├── pages/
-│   ├── Landing.tsx           # Job search + listings
-│   ├── Dashboard.tsx         # Application tracker
-│   └── ResumeBuilder.tsx     # AI resume generator
-├── store/
-│   └── index.ts              # Zustand stores (auth, jobs, app)
+│   ├── Landing.tsx     Job search and listings
+│   ├── Dashboard.tsx   Application tracker
+│   └── ResumeBuilder   AI resume generator
+├── store/              Zustand stores — auth, jobs, app
 ├── utils/
-│   ├── api.ts                # Typed fetch wrapper with retry
-│   └── cache.ts              # IndexedDB caching
+│   ├── api.ts          Typed fetch wrapper with retry and auth header injection
+│   └── cache.ts        IndexedDB read/write helpers
 ├── workers/
-│   └── resumeParser.worker.ts  # Off-thread resume parsing
-└── types/
-    └── index.ts              # Shared TypeScript interfaces
+│   └── resumeParser    Off-thread resume text parsing
+└── types/              Shared TypeScript interfaces used across all layers
 ```
 
-## State Management (Zustand)
+---
 
-Three stores with persist middleware:
-- `useAuthStore` — user session, login/register/logout
-- `useJobStore` — job listings, search, pagination, apply
-- `useAppStore` — theme, cookie consent, applications list
+## Deployment
 
-## Key Features
+### Vercel (recommended — free)
 
-- **Glassmorphism UI** — backdrop blur, translucent cards, noise texture
-- **Dark/light mode** — system preference + manual toggle, persisted
-- **Skeleton loaders** — all async content has shimmer placeholders
-- **Code splitting** — all pages lazy-loaded via React.lazy
-- **Framer Motion** — staggered list animations, modal slide-in
-- **Zod validation** — auth forms fully validated client-side
-- **IndexedDB cache** — offline job listings via idb library
-- **Web Worker** — resume text parsing off main thread
-- **Error boundary** — catches render errors gracefully
-- **GDPR banner** — functional cookies only, consent persisted
+```bash
+# From repo root
+vercel deploy
+```
 
-## Vercel Deployment
+The `vercel.json` in the project root handles API rewrites so frontend and backend can share a domain. Set `VITE_API_URL` to your backend URL in the Vercel dashboard under Environment Variables.
+
+### Manual (any static host)
 
 ```bash
 npm run build
-# Deploy dist/ to Vercel static
-# API rewrites in root vercel.json
+# Upload dist/ to S3, Cloudflare Pages, Netlify, or any static host
 ```
+
+---
+
+## Troubleshooting
+
+**Blank page after login**
+→ Check `VITE_API_URL` is set correctly and the backend is reachable from the browser. Open DevTools → Network and look for failing requests to `/api/user/profile`.
+
+**Jobs not loading**
+→ The backend scraper may not have run yet. Check backend logs for `[scraper] Done` output. The scraper runs on startup and then every 5 hours.
+
+**Dark mode flashes on reload**
+→ Make sure `VITE_APP_NAME` is set — an undefined env var can cause a hydration mismatch on first render.
