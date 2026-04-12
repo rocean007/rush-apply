@@ -396,24 +396,6 @@ def _wellfound()->List[Job]:
         log.info(f"  [wellfound] {len(results)} jobs"); return results
     except Exception as e: log.warning(f"  [wellfound] {e}"); return []
 
-def _remoteco()->List[Job]:
-    results=[]
-    for cat in ["software-dev","customer-service","marketing","writing","design","project-management","sales","accounting-finance"]:
-        try:
-            r=_get(f"https://remote.co/remote-jobs/{cat}/"); soup=BeautifulSoup(r.text,"html.parser")
-            for card in soup.select("li.job_listing,.card.job_listing")[:15]:
-                te=card.select_one(".job_listing-title,h3"); ce=card.select_one(".job_listing-company,.company_name")
-                ae=card.select_one("a[href]")
-                if not te or not ae: continue
-                href=ae["href"]; url=href if href.startswith("http") else f"https://remote.co{href}"
-                j=Job(); j.title=te.get_text(strip=True); j.company=ce.get_text(strip=True) if ce else "Unknown"
-                j.url=url; j.apply_url=url; j.location="Remote"; j.is_remote=True; j.source="remoteco"
-                j.tags=_tags(j.title); j.experience_level=_exp(j.title)
-                j.apply_instructions=f"Apply at Remote.co: {url}"; results.append(j)
-            time.sleep(0.3)
-        except Exception as ex: log.warning(f"  [remoteco/{cat}] {ex}")
-    log.info(f"  [remote.co] {len(results)} jobs"); return results
-
 def _glassdoor()->List[Job]:
     try:
         r=_get("https://www.glassdoor.com/Job/remote-jobs-SRCH_IL.0,6_IS11047_KO7,13.htm?fromAge=1")
@@ -508,7 +490,7 @@ def _reed()->List[Job]:
 
 API_SCRAPERS=[
     _remoteok, _remotive, _himalayas_api, _arbeitnow, _jobicy, _themuse, _workingnomads,
-    _linkedin, _idealist, _wellfound, _remoteco, _glassdoor,
+    _linkedin, _idealist, _wellfound, _glassdoor,
     _adzuna, _jsearch, _reed,
 ]
 
