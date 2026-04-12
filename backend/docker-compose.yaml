@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   backend:
     build: .
@@ -9,9 +11,15 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - DATABASE_PATH=/app/data/job-apply.db
+      # JWT Secret - CHANGE THIS!
       - JWT_SECRET=your-super-secret-jwt-key-change-this
+      # Add other environment variables as needed
+      # - API_KEY=xxx
+      # - SMTP_HOST=xxx
     volumes:
+      # Persist SQLite database
       - ./data:/app/data
+      # Mount logs if your app writes logs
       - ./logs:/app/logs
     networks:
       - job-apply-network
