@@ -21,6 +21,16 @@ playwright install chromium
 docker build -t applybot-agent .
 ```
 
+# Run without any GPU flags
+docker run --rm \
+  --security-opt label=disable \
+  --env-file .env \
+  localhost/applybot-agent \
+  --user-id YOUR_USER_ID \
+  --email you@email.com \
+  --password yourpassword \
+  --jobs-limit 3
+
 ## Running
 
 ```bash
