@@ -196,6 +196,8 @@ def _get(url: str, **kwargs) -> requests.Response:
 def init_db() -> None:
     os.makedirs(os.path.dirname(DB_PATH) or ".", exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
+    # Schema intentionally matches the TypeScript version (scraped_at uses DEFAULT CURRENT_TIMESTAMP)
+    # so existing Node.js queries keep working without any changes.
     conn.executescript("""
         CREATE TABLE IF NOT EXISTS jobs (
             id               TEXT PRIMARY KEY,
@@ -211,17 +213,24 @@ def init_db() -> None:
             tags             TEXT DEFAULT '[]',
             source           TEXT,
             is_remote        INTEGER DEFAULT 1,
-            posted_at        TEXT,
-            scraped_at       TEXT,
-            job_type         TEXT DEFAULT 'full-time',
-            experience_level TEXT DEFAULT '',
-            apply_instructions TEXT DEFAULT ''
+            scraped_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
-        CREATE INDEX IF NOT EXISTS idx_jobs_posted_at  ON jobs(posted_at);
         CREATE INDEX IF NOT EXISTS idx_jobs_source     ON jobs(source);
         CREATE INDEX IF NOT EXISTS idx_jobs_is_remote  ON jobs(is_remote);
         CREATE INDEX IF NOT EXISTS idx_jobs_scraped_at ON jobs(scraped_at);
     """)
+    # Safely migrate an existing TS-created DB by adding new columns.
+    # Each ALTER TABLE is a no-op if the column already exists.
+    for col_def in [
+        "ALTER TABLE jobs ADD COLUMN posted_at TEXT",
+        "ALTER TABLE jobs ADD COLUMN job_type TEXT DEFAULT 'full-time'",
+        "ALTER TABLE jobs ADD COLUMN experience_level TEXT DEFAULT ''",
+        "ALTER TABLE jobs ADD COLUMN apply_instructions TEXT DEFAULT ''",
+    ]:
+        try:
+            conn.execute(col_def)
+        except Exception:
+            pass  # column already exists
     conn.commit()
     conn.close()
     logger.info(f"Database ready: {DB_PATH}")
@@ -241,9 +250,9 @@ def persist_jobs(jobs: List[Job]) -> int:
                     """INSERT OR IGNORE INTO jobs
                        (id,title,company,url,apply_url,description,location,
                         salary_min,salary_max,salary_currency,tags,source,
-                        is_remote,posted_at,scraped_at,job_type,experience_level,
+                        is_remote,posted_at,job_type,experience_level,
                         apply_instructions)
-                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     (
                         j.id, j.title[:300], j.company[:200],
                         j.url, j.apply_url or j.url,
@@ -251,7 +260,7 @@ def persist_jobs(jobs: List[Job]) -> int:
                         j.salary_min, j.salary_max, j.salary_currency,
                         json.dumps(j.tags), j.source,
                         1 if j.is_remote else 0,
-                        j.posted_at, j.scraped_at,
+                        j.posted_at,  # scraped_at auto-set by SQLite DEFAULT CURRENT_TIMESTAMP
                         j.job_type, j.experience_level,
                         j.apply_instructions,
                     ),
