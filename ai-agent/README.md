@@ -16,19 +16,9 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-### 2. Environment config
+### 2. Configure Docker
 
-```bash
-cp .env.example .env
-# Fill in values — at minimum BACKEND_URL and INTERNAL_API_KEY
-```
-
-### 3. Verify CUDA (optional, for local Llama inference)
-
-```bash
-python3 -c "import torch; print(torch.cuda.is_available())"
-# Should print: True
-nvidia-smi   # Check CUDA version
+docker build -t applybot-agent .
 ```
 
 ## Running
