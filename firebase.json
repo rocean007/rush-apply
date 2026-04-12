@@ -1,0 +1,13 @@
+{
+
+  "hosting": {
+
+    "site": "job-apply",
+
+    "public": "public",
+
+    ...
+
+  }
+
+}
