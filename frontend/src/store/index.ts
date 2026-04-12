@@ -65,8 +65,12 @@ interface JobStore {
   loading: boolean;
   search: string;
   source: string;
+  remoteOnly: boolean;
+  salaryMin: string;
   setSearch: (s: string) => void;
   setSource: (s: string) => void;
+  setRemoteOnly: (v: boolean) => void;
+  setSalaryMin: (v: string) => void;
   fetchJobs: (page?: number) => Promise<void>;
   applyToJob: (jobId: string) => Promise<void>;
 }
@@ -78,16 +82,22 @@ export const useJobStore = create<JobStore>((set, get) => ({
   loading: false,
   search: '',
   source: '',
+  remoteOnly: false,
+  salaryMin: '',
 
   setSearch: (search) => set({ search }),
   setSource: (source) => set({ source }),
+  setRemoteOnly: (remoteOnly) => set({ remoteOnly }),
+  setSalaryMin: (salaryMin) => set({ salaryMin }),
 
   fetchJobs: async (page = 1) => {
     set({ loading: true });
-    const { search, source } = get();
+    const { search, source, remoteOnly, salaryMin } = get();
     const params: Record<string, string | number> = { page, limit: 20 };
-    if (search) params.search = search;
-    if (source) params.source = source;
+    if (search)    params.search    = search;
+    if (source)    params.source    = source;
+    if (remoteOnly) params.remote   = 'true';
+    if (salaryMin) params.salaryMin = salaryMin;
     try {
       const data = await api.getJobs(params) as any;
       set({ jobs: data.jobs, total: data.total, page, loading: false });

@@ -9,19 +9,8 @@ export interface User {
   resumeText?: string;
 }
 
-export interface Experience {
-  company: string;
-  role: string;
-  start: string;
-  end?: string;
-  bullets: string[];
-}
-
-export interface Education {
-  school: string;
-  degree: string;
-  year: string;
-}
+export interface Experience { company: string; role: string; start: string; end?: string; bullets: string[]; }
+export interface Education  { school: string; degree: string; year: string; }
 
 export interface Job {
   id: string;
@@ -30,10 +19,12 @@ export interface Job {
   location: string;
   description?: string;
   url: string;
+  applyUrl?: string;
   source: string;
-  salaryMin?: number;
-  salaryMax?: number;
-  tags: string[];
+  salaryMin?: number | null;
+  salaryMax?: number | null;
+  salaryCurrency?: string;
+  tags: string[] | string;
   isRemote: boolean;
   scrapedAt: string;
 }
