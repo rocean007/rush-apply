@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
+    "playwright": "^1.59.1",
     "rss-parser": "^3.13.0",
     "uuid": "^9.0.1"
   },
