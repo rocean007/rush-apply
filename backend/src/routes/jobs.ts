@@ -7,6 +7,21 @@ import { generateCoverLetter } from '../services/ai';
 
 const router = Router();
 
+function timeAgo(iso: string): string {
+  if (!iso) return 'recently';
+  const diff  = Date.now() - new Date(iso).getTime();
+  if (isNaN(diff) || diff < 0) return 'recently';
+  const mins  = Math.floor(diff / 60_000);
+  const hours = Math.floor(diff / 3_600_000);
+  const days  = Math.floor(diff / 86_400_000);
+  if (mins  < 2)  return 'just now';
+  if (mins  < 60) return `${mins} minute${mins  !== 1 ? 's' : ''} ago`;
+  if (hours < 24) return `${hours} hour${hours  !== 1 ? 's' : ''} ago`;
+  if (days  < 30) return `${days} day${days     !== 1 ? 's' : ''} ago`;
+  const mo = Math.floor(days / 30);
+  return `${mo} month${mo !== 1 ? 's' : ''} ago`;
+}
+
 /**
  * GET /api/jobs
  * Paginated, filterable job listings — returns location, salary, applyUrl
@@ -47,7 +62,7 @@ router.get('/', [
     `SELECT id, title, company, location, url, apply_url,
             salary_min, salary_max, salary_currency,
             tags, source, is_remote, scraped_at,
-            posted_at, posted_ago, job_type, experience_level,
+            posted_at, job_type, experience_level,
             apply_payload, description
      FROM jobs ${where}
      ORDER BY scraped_at DESC
@@ -65,7 +80,7 @@ router.get('/', [
     salaryMax:       j.salary_max,
     salaryCurrency:  j.salary_currency || 'USD',
     postedAt:        j.posted_at,
-    postedAgo:       j.posted_ago || 'recently',
+    postedAgo:       timeAgo(j.posted_at),
     jobType:         j.job_type || 'full-time',
     experienceLevel: j.experience_level || '',
     scrapedAt:       j.scraped_at,

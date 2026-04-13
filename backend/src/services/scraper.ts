@@ -778,7 +778,8 @@ async function scrapeLinkedIn(globalSeen: Set<string>): Promise<ScrapedJob[]> {
       globalSeen.add(url);
       const title    = titleEl.textContent?.trim() || '';
       const rawDate  = timeEl?.getAttribute('datetime') || '';
-      const postedAt = safeIso(rawDate) || NOW().toISOString();
+      const postedAt = safeIso(rawDate) || '';
+      if (!withinWindow(postedAt)) continue;
 
       results.push(make({
         ...DEFAULTS,
