@@ -46,7 +46,9 @@ router.get('/', [
   const rows  = db.prepare(
     `SELECT id, title, company, location, url, apply_url,
             salary_min, salary_max, salary_currency,
-            tags, source, is_remote, scraped_at
+            tags, source, is_remote, scraped_at,
+            posted_at, posted_ago, job_type, experience_level,
+            apply_payload, description
      FROM jobs ${where}
      ORDER BY scraped_at DESC
      LIMIT ? OFFSET ?`
@@ -55,13 +57,18 @@ router.get('/', [
   // Parse JSON tags for each row
   const jobs = rows.map(j => ({
     ...j,
-    tags: (() => { try { return JSON.parse(j.tags || '[]'); } catch { return []; } })(),
-    isRemote: !!j.is_remote,
-    applyUrl: j.apply_url || j.url,
-    salaryMin: j.salary_min,
-    salaryMax: j.salary_max,
-    salaryCurrency: j.salary_currency || 'USD',
-    scrapedAt: j.scraped_at,
+    tags:            (() => { try { return JSON.parse(j.tags || '[]');          } catch { return []; }  })(),
+    applyPayload:    (() => { try { return JSON.parse(j.apply_payload || '{}'); } catch { return {}; }  })(),
+    isRemote:        !!j.is_remote,
+    applyUrl:        j.apply_url || j.url,
+    salaryMin:       j.salary_min,
+    salaryMax:       j.salary_max,
+    salaryCurrency:  j.salary_currency || 'USD',
+    postedAt:        j.posted_at,
+    postedAgo:       j.posted_ago || 'recently',
+    jobType:         j.job_type || 'full-time',
+    experienceLevel: j.experience_level || '',
+    scrapedAt:       j.scraped_at,
   }));
 
   return res.json({ jobs, total, page, pages: Math.ceil(total / limit) });
