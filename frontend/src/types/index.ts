@@ -27,6 +27,25 @@ export interface Job {
   tags: string[] | string;
   isRemote: boolean;
   scrapedAt: string;
+  postedAt?: string;
+  postedAgo?: string;
+  jobType?: string;
+  experienceLevel?: string;
+  applyPayload?: {
+    jobTitle:       string;
+    company:        string;
+    applyUrl:       string;
+    location:       string;
+    isRemote:       boolean;
+    salaryMin:      number | null;
+    salaryMax:      number | null;
+    salaryCurrency: string;
+    tags:           string[];
+    description:    string;
+    category:       string;
+    seniority:      string;
+    jobType:        string;
+  };
 }
 
 export interface Application {

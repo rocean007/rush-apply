@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { User, Job, Application } from '../types';
 import { api } from '../utils/api';
+import type { User, Job, Application, JobsResponse } from '../types';
 
 interface AuthStore {
   user: User | null;

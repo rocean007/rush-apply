@@ -27,6 +27,7 @@ export async function cacheJobs(jobs: Job[]): Promise<void> {
   try {
     const db = await getDB();
     const tx = db.transaction('jobs', 'readwrite');
+    await tx.store.clear();
     await Promise.all(jobs.slice(0, 50).map(j => tx.store.put({ ...j, cachedAt: Date.now() })));
     await tx.done;
   } catch { /* non-critical */ }
@@ -37,7 +38,16 @@ export async function getCachedJobs(): Promise<Job[]> {
   try {
     const db = await getDB();
     const all = await db.getAll('jobs');
-    const fresh = all.filter(j => Date.now() - j.cachedAt < TTL);
+    const now = Date.now();
+    const fresh = all.filter(j => now - j.cachedAt < TTL);
+
+    const stale = all.filter(j => now - j.cachedAt >= TTL);
+    if (stale.length) {
+      const tx = db.transaction('jobs', 'readwrite');
+      await Promise.all(stale.map(j => tx.store.delete(j.id)));
+      await tx.done;
+    }
+
     return fresh;
   } catch {
     return [];
