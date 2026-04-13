@@ -48,9 +48,7 @@ export default function Landing() {
       {/* Search bar */}
       <div className="relative mb-4">
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M11.4 10H10.7l-.3-.3A6.5 6.5 0 0 0 6.5 1a6.5 6.5 0 1 0 4.9 10.8l.3.3v.7l5 5-1.5 1.5-5-5zm-6 0A4.5 4.5 0 1 1 10 5.5 4.5 4.5 0 0 1 5.5 10z"/>
-          </svg>
+          <img src="/public/favicon.png" alt="icon" className="w-4 h-4 inline" />
         </span>
         <input
           className="input pl-10 pr-4 py-3 text-base"

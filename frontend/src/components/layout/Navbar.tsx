@@ -21,11 +21,7 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="black">
-                <path d="M8 1L15 5v6L8 15 1 11V5L8 1z" />
-              </svg>
-            </span>
+            <img src="/public/favicon.png" alt="Applybot Logo" className="w-7 h-7 rounded-lg bg-accent" />
             <span className="font-display font-700 text-white tracking-tight">Applybot</span>
           </Link>
 

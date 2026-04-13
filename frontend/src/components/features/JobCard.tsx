@@ -80,9 +80,7 @@ export default function JobCard({ job, index }: Props) {
       <div className="flex items-center gap-3 flex-wrap text-xs">
         {/* Location */}
         <span className="flex items-center gap-1 text-zinc-400">
-          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" className="shrink-0">
-            <path d="M8 0a5 5 0 0 0-5 5c0 4 5 11 5 11s5-7 5-11a5 5 0 0 0-5-5zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
-          </svg>
+          <img src="/public/favicon.png" alt="icon" className="w-3 h-3 shrink-0" />
           {job.location || 'Remote'}
         </span>
 
@@ -94,9 +92,7 @@ export default function JobCard({ job, index }: Props) {
         {/* Salary */}
         {salary && (
           <span className="flex items-center gap-1 text-accent font-mono">
-            <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm.5 11.5v1h-1v-1a3 3 0 0 1-2.3-1.1l.8-.9c.4.5 1 .9 1.7.9.7 0 1.3-.4 1.3-1s-.4-.9-1.4-1.2C6.3 7.9 5.5 7.2 5.5 6c0-1.1.8-2 1.8-2.3V2.5h1v1.2c.7.2 1.3.7 1.7 1.4l-.9.7c-.3-.6-.8-1-1.5-1-.7 0-1.1.4-1.1.9 0 .5.4.8 1.4 1.1 1.3.4 2 1.1 2 2.2 0 1.1-.8 2-1.9 2.3l.5.2z"/>
-            </svg>
+            <img src="/public/favicon.png" alt="icon" className="w-2.5 h-2.5 inline" />
             {salary}
           </span>
         )}
