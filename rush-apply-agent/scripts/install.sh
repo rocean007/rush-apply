@@ -1,10 +1,7 @@
-#!/usr/bin/env bash
-# RushApply AI Agent — curl installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/your-org/rush-apply-agent/main/scripts/install.sh | bash
 
 set -e
 
-REPO="https://github.com/your-org/rush-apply-agent"
+REPO="https://github.com/rocean007/rush-apply/blob/main/rush-apply-agent"
 DIR="rush-apply-agent"
 
 echo ""

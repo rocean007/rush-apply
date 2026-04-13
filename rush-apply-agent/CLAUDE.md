@@ -21,7 +21,7 @@ This is an **autonomous job application agent** that integrates with the RushApp
 
 ```bash
 # 1. Install
-curl -fsSL https://raw.githubusercontent.com/your-org/rush-apply-agent/main/scripts/install.sh | bash
+curl -fsSL https://github.com/rocean007/rush-apply/tree/main/rush-apply-agent/scripts/install.sh  | bash
 
 # 2. Configure
 cp .env.example .env

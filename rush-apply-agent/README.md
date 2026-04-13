@@ -299,7 +299,7 @@ This repo ships a `CLAUDE.md` skill definition file. Drop it into any Claude Cod
 
 ```bash
 # From your Claude Code project root:
-curl -O https://raw.githubusercontent.com/your-org/rush-apply-agent/main/CLAUDE.md
+curl -O https://github.com/rocean007/rush-apply/tree/main/rush-apply-agent/CLAUDE.md
 ```
 
 Then you can say:
