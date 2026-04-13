@@ -45,7 +45,7 @@ The agent runs as a Claude Code skill, meaning you can invoke it with a single c
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/your-org/rush-apply-agent/main/scripts/install.sh | bash
+curl -fsSL https://github.com/rocean007/rush-apply/tree/main/rush-apply-agent/scripts/install.sh | bash
 cd rush-apply-agent
 cp .env.example .env
 ```
@@ -59,7 +59,7 @@ python main.py --email you@example.com --password yourpassword
 **Manual install:**
 
 ```bash
-git clone https://github.com/your-org/rush-apply-agent
+git clone https://github.com/rocean007/rush-apply/tree/main/rush-apply-agent
 cd rush-apply-agent
 pip install -r requirements.txt
 playwright install chromium
