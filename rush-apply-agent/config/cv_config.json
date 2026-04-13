@@ -1,0 +1,18 @@
+{
+  "accent_color": "#0f3460",
+  "dark_color": "#1a1a2e",
+  "grey_color": "#6b7280",
+  "font": "Helvetica",
+  "name_font_size": 22,
+  "section_font_size": 11,
+  "body_font_size": 9.5,
+  "page_margins_cm": 1.5,
+  "section_order": [
+    "PROFESSIONAL SUMMARY",
+    "KEY SKILLS",
+    "EXPERIENCE",
+    "KEY ACHIEVEMENTS",
+    "EDUCATION",
+    "CERTIFICATIONS"
+  ]
+}

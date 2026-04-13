@@ -1,0 +1,53 @@
+{
+  "_comment": "Fill this out to run the agent without a backend (standalone mode).",
+  "id": "local-user",
+  "email": "your@email.com",
+  "full_name": "Your Full Name",
+  "title": "Senior Software Engineer",
+  "phone": "+1 555 000 0000",
+  "location": "San Francisco, CA",
+  "linkedin": "https://linkedin.com/in/yourprofile",
+  "github": "https://github.com/yourusername",
+  "portfolio": "https://yourportfolio.com",
+  "summary": "Experienced software engineer with 5+ years building scalable web applications. Passionate about clean code, developer experience, and shipping fast.",
+  "skills": [
+    "Python", "TypeScript", "React", "Node.js", "PostgreSQL",
+    "Docker", "Kubernetes", "AWS", "FastAPI", "GraphQL",
+    "Redis", "CI/CD", "System Design", "REST APIs"
+  ],
+  "experience": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "Acme Corp",
+      "start": "2022",
+      "end": "Present",
+      "bullets": [
+        "Led migration of monolith to microservices, reducing deploy time by 60%",
+        "Built real-time dashboard serving 50k DAU using WebSockets + React",
+        "Mentored 3 junior engineers; established code review standards"
+      ]
+    },
+    {
+      "role": "Software Engineer",
+      "company": "StartupXYZ",
+      "start": "2020",
+      "end": "2022",
+      "bullets": [
+        "Developed core payment processing pipeline handling $2M/month",
+        "Reduced API latency by 40% through query optimisation and caching",
+        "Implemented automated testing suite, increasing coverage from 20% to 80%"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.Sc. Computer Science",
+      "institution": "University of California, Berkeley",
+      "year": "2020"
+    }
+  ],
+  "certifications": [
+    "AWS Certified Solutions Architect",
+    "Google Cloud Professional Data Engineer"
+  ]
+}
