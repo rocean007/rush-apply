@@ -71,7 +71,7 @@ python main.py --email you@example.com --password yourpassword
 
 ```bash
 # Drop into any Claude Code project — it auto-discovers CLAUDE.md
-curl -O https://raw.githubusercontent.com/your-org/rush-apply-agent/main/CLAUDE.md
+curl -O https://github.com/rocean007/rush-apply/tree/main/rush-apply-agent/CLAUDE.md
 ```
 
 ---
